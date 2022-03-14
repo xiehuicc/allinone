@@ -1,7 +1,7 @@
 .DS_Store
 web/node_modules
 api/node_modules/*
-sevice/node_modules
+service/node_modules/*
 /dist
 
 

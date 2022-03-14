@@ -1,0 +1,35 @@
+{
+  "name": "service",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "service": "node app.js"
+  },
+  "keywords": [],
+  "author": "xiehuicc",
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/xiehuicc/allinone.git"
+  },
+  "bugs": {
+    "url": "https://github.com/xiehuicc/allinone/issues"
+  },
+  "homepage": "https://github.com/xiehuicc/allinone#readme",
+  "description": "",
+  "dependencies": {
+    "@babel/cli": "^7.17.6",
+    "@babel/core": "^7.17.5",
+    "@babel/node": "^7.16.8",
+    "@babel/plugin-proposal-class-properties": "^7.16.7",
+    "@babel/plugin-proposal-decorators": "^7.17.2",
+    "@babel/preset-env": "^7.16.11",
+    "chalk": "^5.0.1",
+    "koa": "^2.13.4",
+    "koa-bodyparser": "^4.3.0",
+    "koa-cors": "0.0.16",
+    "koa-logger": "^3.2.1",
+    "koa-static": "^5.0.0",
+    "log": "^6.3.1"
+  }
+}
