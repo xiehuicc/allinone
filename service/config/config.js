@@ -1,6 +1,6 @@
 const  config = {
     port: 3000,
-    mongodb_url: 'mongodb://admin:123456@127.0.0.1:27017',
+    mongodb_url: 'mongodb://127.0.0.1:27017/manageSystem',
     user: 'admin',
     password: '123456'
 }

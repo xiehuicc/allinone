@@ -6,6 +6,7 @@ const serve = require('koa-static')
 const cors = require('koa-cors')
 const logger = require('koa-logger')
 const db = require('./utils/mongoose').db
+const people = require('./models/peoplesSchema')
 const app = new Koa()
 const port = config.port || '8080'
 // middleWare
@@ -53,5 +54,17 @@ const server = app.listen(port,() => {
 })
 
 db.connect()
-
+var People = new people({
+  // _id: '123445',
+  deleted: false,
+  birthday: new Date(),
+  createTime: new Date()
+});
+People.save((err,res) => {
+  if(err) {
+    console.log(' save error ',err)
+  } else {
+    console.log(res)
+  }
+})
 module.exports = app
