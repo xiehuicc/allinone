@@ -1,15 +1,57 @@
 const Koa = require('koa')
 const config = require('./config/config')
 const bodyParser = require('koa-bodyparser')
+const koaBody = require('koa-body')
 const serve = require('koa-static')
 const cors = require('koa-cors')
 const logger = require('koa-logger')
-
+const db = require('./utils/mongoose').db
 const app = new Koa()
 const port = config.port || '8080'
 // middleWare
 
+// try-catch 中间件
+app.use(async (ctx, next) => {
+  try {
+    await next()
+    if (ctx.response.body !== undefined) {
+      if (isArray(ctx.response.body)) {
+        ctx.response.body = {
+          code: 200, msg: "success", result: ctx.response.body
+        }
+      } else if (isObject(ctx.response.body)) {
+        ctx.response.body.code = ctx.response.body.code || 200
+        ctx.response.body.msg = ctx.response.body.msg || "success"
+      }
+    }
+  } catch (err) {
+    // console.log("捕获到了异常")
+    // 系统内自定义异常
+    ctx.response.status = 200
+    ctx.response.body = {
+      code: err.code || 500,
+      msg: err.message,
+      isSuccess: false
+    }
+  }
+})
+
+app.use(async (ctx, next) => {
+  ctx.params = ctx.request.body.fields
+  await next()
+})
+
+// http请求解析中间件
+app.use(koaBody())
+
+// 路由中间件
+// app.use(router.routes(), router.allowedMethods())
+
 // koa static server
 const server = app.listen(port,() => {
-    console.log('Service is start on port ' + port)
+  console.log('【 Service 】 starting on port ' + port)
 })
+
+db.connect()
+
+module.exports = app

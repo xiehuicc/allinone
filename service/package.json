@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "service": "node app.js"
+    "service": "nodemon node app.js"
   },
   "keywords": [],
   "author": "xiehuicc",
@@ -26,10 +26,12 @@
     "@babel/preset-env": "^7.16.11",
     "chalk": "^5.0.1",
     "koa": "^2.13.4",
+    "koa-body": "^4.2.0",
     "koa-bodyparser": "^4.3.0",
     "koa-cors": "0.0.16",
     "koa-logger": "^3.2.1",
     "koa-static": "^5.0.0",
-    "log": "^6.3.1"
+    "log": "^6.3.1",
+    "mongoose": "^6.2.4"
   }
 }
