@@ -3,10 +3,9 @@
 
 ### mongo 
 采用mongoDB官网免费线上数据库
-ip：localhost:27017
 Auth DB: manageSystem
 User name: admin
-Password: 123456
+Password: xiehui0602
 
 ### 身份验证
 
