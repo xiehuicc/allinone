@@ -54,17 +54,19 @@ const server = app.listen(port,() => {
 })
 
 db.connect()
-var People = new people({
-  // _id: '123445',
-  deleted: false,
-  birthday: new Date(),
-  createTime: new Date()
-});
-People.save((err,res) => {
-  if(err) {
-    console.log(' save error ',err)
-  } else {
-    console.log(res)
-  }
-})
+// var People = new people({
+//   _id: '123445',
+//   deleted: false,
+//   birthday: new Date(),
+//   createTime: new Date()
+// });
+setTimeout(() => {
+  People.save((err,res) => {
+    if(err) {
+      console.log(' save error ',err)
+    } else {
+      console.log(res)
+    }
+  })
+},5000)
 module.exports = app
