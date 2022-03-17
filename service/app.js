@@ -55,7 +55,7 @@ const server = app.listen(port,() => {
 
 db.connect()
 var People = new people({
-  // _id: '123445',
+  _id: '123',
   deleted: false,
   birthday: new Date(),
   createTime: new Date()

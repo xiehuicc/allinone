@@ -1,7 +1,7 @@
-const ObjectID = require('mongodb').ObjectID
-console.log('ddddd',ObjectID)
+const ObjectId = require('mongodb').ObjectId
+console.log('ddddd',ObjectId().toString())
 const constructObjectId = () => {
-    return ObjectID().toString()
+    return ObjectId().toString()
 }
 
 module.exports = constructObjectId
