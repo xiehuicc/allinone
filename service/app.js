@@ -10,6 +10,9 @@ const db = require('./utils/mongoose').db
 const people = require('./models/peoplesSchema')
 const app = new Koa()
 const port = config.port || '8080'
+
+const BusinessError = require('../service/utils/error')
+global.BusinessError = BusinessError
 // middleWare
 
 // try-catch 中间件
