@@ -1,7 +1,9 @@
-const Router = require('koa-router')
+
 const accountController = require('../controllers/accountController')
+
+const Router = require('koa-router')
 const router = new Router({
-    prefix: 'account'
+    prefix: '/account'
 })
 
 router.post('/login', async(ctx) => {
@@ -11,6 +13,7 @@ router.post('/login', async(ctx) => {
 router.post('/add', async(ctx) => {
     ctx.body = await accountController.add(ctx.request.body)
 })
+
 
 
 

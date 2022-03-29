@@ -11,6 +11,13 @@ class DB {
         db.once('open',() => {
             console.log(`open db connection on ${config.mongodb_url}`)
         })
+        // const option = {
+        //   useNewUrlParser: true,
+        //   useUnifiedTopology: true,
+        //   dbName: config.mongodb_db
+        // }
+        // this.conn = mongoose.connect(config.mongodb_url, option)
+        // mongoClinet = this.conn
         mongoClinet = mongoose.connect(config.mongodb_url);
     }
 }

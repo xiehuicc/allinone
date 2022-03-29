@@ -1,6 +1,7 @@
 const MongoClient = require('mongodb').MongoClient;
-import config from '../config/config'
-import _ from 'lodash'
+const config =  require('../config/config')
+const people = require('../models/peoplesSchema')
+const _ =  require('lodash')
 const transactionOptions = {
     readPreference: 'primary',
     readConcern: { level: 'local' },
@@ -141,7 +142,9 @@ class MongoDBCRUD {
      */
     async insertOne(model = '', doc, option = {}) {
         const Model = await getModel(model)
-        return await Model.insertOne(doc, option)
+        let res = await Model.insertOne(doc, option)
+        console.log('res==',res)
+        return res
     }
 
     /**
@@ -185,4 +188,4 @@ const getModel = async (model = '') => {
         throw new global.BusinessError(500, error && error.message || '数据库查询数据失败')
     }
 }
-export default mongoDBCRUD
+module.exports = mongoDBCRUD

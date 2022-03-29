@@ -1,15 +1,21 @@
-const { default: mongoDBCRUD } = require('../../utils/mongodbCURD')
-const MongoDBCRUD = require('../../utils/mongodbCURD')
-
-class AccountController {
+// const { default: mongoDBCRUD } = require('../../utils/mongodbCURD')
+const mongoDBCRUD = require('../../utils/mongodbCURD')
+const model = 'peoples'
+const  AccountController = {
     async login(body) {
         let {accountName, password} = body
         let res = await mongoDBCRUD.findOne("peoples",{accountName:accountName,password:password})
         console.log(res,'///////')
-    }
+        return res
+    },
 
     async add(body) {
-        await mongoDBCRUD.insertOne('peoples',body)
+        console.log(body)
+        return await mongoDBCRUD.insertOne(model,body)
+    },
+
+    async findOne(query) {
+        return await mongoDBCRUD.findOne(model,query)
     }
 }
 

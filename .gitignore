@@ -3,6 +3,7 @@
 web/node_modules
 api/node_modules/*
 service/node_modules/*
+**/package-lock.json
 /dist
 
 
