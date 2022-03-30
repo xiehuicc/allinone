@@ -143,7 +143,6 @@ class MongoDBCRUD {
     async insertOne(model = '', doc, option = {}) {
         const Model = await getModel(model)
         let res = await Model.insertOne(doc, option)
-        console.log('res==',res)
         return res
     }
 

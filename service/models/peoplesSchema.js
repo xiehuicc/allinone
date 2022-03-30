@@ -12,6 +12,7 @@ const peoplesSchema = new Schema({
         isInter: {type: Schema.Types.Boolean,default: true}, // 是否为内部人员，默认为true
         account: {type: Schema.Types.String }, // 员工账号
         password: {type: Schema.Types.String }, // 员工密码
+        tel: {type: Schema.Types.String } // 员工手机号
     },
     ...createAndUpdate
 })

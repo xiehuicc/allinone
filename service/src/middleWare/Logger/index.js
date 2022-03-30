@@ -25,9 +25,9 @@ const intercept = ( options ) => {
         const url = ctx.request.url
         logger.info(`${url}`)
         if(ctx.request.method === 'GET' || ctx.request.method === 'DELETE') {
-            logger.info(`ctx.request.query:${JSON.stringify(ctx.request.query)}`)
+            logger.info(`ctx.request.query：${JSON.stringify(ctx.request.query)}`)
         } else {
-            logger.info(`ctx.request.body:${JSON.stringify(ctx.request.body || '')}`)
+            logger.info(`ctx.request.body：${JSON.stringify(ctx.request.body || '')}`)
         }
         // 将日志信息 输出到控制台
         log4js.configure({
