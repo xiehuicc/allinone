@@ -5,14 +5,16 @@ const koaBody = require('koa-body')
 const router = require('./src/middleWare/Router/index')
 const serve = require('koa-static')
 const cors = require('koa-cors')
-const logger = require('koa-logger')
 const db = require('./utils/mongoose').db
-const people = require('./models/peoplesSchema')
 const app = new Koa()
 const port = config.port || '8080'
 
+
+const Logger = require('./src/middleWare/Logger/index')
 const BusinessError = require('../service/utils/error')
 global.BusinessError = BusinessError
+
+
 // middleWare
 
 // try-catch 中间件
@@ -38,6 +40,7 @@ app.use(async (ctx, next) => {
       msg: err.message,
       isSuccess: false
     }
+    return ctx.response.body
   }
 })
 
@@ -49,8 +52,12 @@ app.use(async (ctx, next) => {
 // http请求解析中间件
 app.use(koaBody())
 
+// log4js 日志中间件
+app.use(Logger.intercept())
+
 // 路由中间件
 app.use(router.routes(), router.allowedMethods())
+
 
 // koa static server
 const server = app.listen(port,() => {
@@ -58,19 +65,4 @@ const server = app.listen(port,() => {
 })
 
 db.connect()
-// var People = new people({
-//   _id: '123445',
-//   deleted: false,
-//   birthday: new Date(),
-//   createTime: new Date()
-// });
-setTimeout(() => {
-  // People.save((err,res) => {
-  //   if(err) {
-  //     console.log(' save error ',err)
-  //   } else {
-  //     console.log(res)
-  //   }
-  // })
-},5000)
 module.exports = app
