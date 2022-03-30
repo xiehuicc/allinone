@@ -16,15 +16,28 @@ logger.fatal('this is fatal');
 const intercept = ( options ) => {
     return async (ctx, next) => {
       const start = Date.now()
-      log4js.configure({
-        appenders: { koa2learn: { type: 'file', filename: './log/koa2learn.log' } },
-        categories: { default: { appenders: ['koa2learn'], level: 'info' } }
-      }); 
-      const logger = log4js.getLogger('koa2learn');
-      await next()
-      const end = Date.now()
-      const responseTime = end - start;
-      logger.info(`响应时间为${responseTime/1000}s`);
+    // 将日志文件保存到文件中
+    //   log4js.configure({
+    //     appenders: { koa2learn: { type: 'file', filename: './log/koa2learn.log' } },
+    //     categories: { default: { appenders: ['koa2learn'], level: 'info' } }
+    //   }); 
+    
+        const url = ctx.request.url
+        logger.info(`${url}`)
+        if(ctx.request.method === 'GET' || ctx.request.method === 'DELETE') {
+            logger.info(`ctx.request.query:${JSON.stringify(ctx.request.query)}`)
+        } else {
+            logger.info(`ctx.request.body:${JSON.stringify(ctx.request.body || '')}`)
+        }
+        // 将日志信息 输出到控制台
+        log4js.configure({
+            appenders: { 'out': { type: 'stdout' } },
+            categories: { default: { appenders: ['out'], level: 'info' } }
+        });
+        await next()
+        const end = Date.now()
+        const responseTime = end - start;
+        logger.info(`响应时间为${responseTime/1000}s`);
     }
 }
 

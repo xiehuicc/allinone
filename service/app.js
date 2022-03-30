@@ -32,7 +32,7 @@ app.use(async (ctx, next) => {
       }
     }
   } catch (err) {
-    console.log("捕获到了异常",`路由为${ctx.originalUrl}-------->${err.message}`)
+    console.log("捕获到了异常",`路由为${ctx.request.url}-------->${err.message}`)
     // 系统内自定义异常
     ctx.response.status = 200
     ctx.response.body = {
