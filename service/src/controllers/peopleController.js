@@ -1,4 +1,5 @@
 const mongodbCRUD = require('../../utils/mongodbCURD')
+const dbHelper = require('../../utils/dbHelp')
 const model = 'peoples'
 
 
@@ -29,7 +30,7 @@ const PeopleController = {
                 throw new global.BusinessError(500,'该手机号已存在')
             }
         }
-        return await mongodbCRUD.insertOne(model,body)
+        return await dbHelper.add(model,body)
     },
 
     // 转换 对应数据库中查询的字段
