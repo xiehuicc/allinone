@@ -3,9 +3,19 @@ const mongodbCRUD = require('../../utils/mongodbCURD')
 const model = 'peoples'
 const  AccountController = {
     async login(body) {
-        let {accountName, password} = body
-        let res = await mongodbCRUD.findOne("peoples",{accountName:accountName,password:password})
-        return res
+        let { account, password } = body
+        let params = {
+          ["profile.account"]: account,
+          ["profile.password"]: password,
+          delete: false
+        }
+        let res = await mongodbCRUD.findOne("peoples", params)
+        // 该账号不存在
+        if (res == null) {
+          return {code: 400, message: '账号或密码不正确'}
+        } else {
+          return {code: 200, message: '登录成功',result: res}
+        }
     },
 
     async add(body) {

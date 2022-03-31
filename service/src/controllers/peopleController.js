@@ -6,6 +6,10 @@ const model = 'peoples'
 
 const PeopleController = {
     async findOne(query) {
+        if (query.delete) {
+          // 将字符串 转为布尔值
+          query.delete =  eval(query.delete)
+        }
         return await mongodbCRUD.findOne(model,query)
     },
 

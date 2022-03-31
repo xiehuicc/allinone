@@ -1,3 +1,5 @@
+// 对于新增人员方法，需要添加默认值（如创建时间，是否删除）需要用create方法。
+
 var models = {};
 (async function () {
   const fs = require('fs')
