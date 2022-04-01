@@ -1,5 +1,4 @@
-const peopleController = require('../controllers/PeopleController')
-
+const peopleController = require('../controllers/peopleController')
 const Router = require('koa-router')
 const router = new Router({
     prefix: '/people'
