@@ -1,12 +1,6 @@
 ### allinone
 人员管理平台
 
-### mongo 
-采用mongoDB官网免费线上数据库
-Auth DB: manageSystem
-User name: admin
-Password: xiehui0602
-
 ### 身份验证
 
 
