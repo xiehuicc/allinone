@@ -17,6 +17,18 @@ global.BusinessError = BusinessError
 
 // middleWare
 
+//koa 解决跨域
+app.use(async (ctx, next)=> {
+  ctx.set('Access-Control-Allow-Origin', '*');
+  ctx.set('Access-Control-Allow-Headers', 'Content-Type, Content-Length, Authorization, Accept, X-Requested-With , yourHeaderFeild');
+  ctx.set('Access-Control-Allow-Methods', 'PUT, POST, GET, DELETE, OPTIONS');
+  if (ctx.method == 'OPTIONS') {
+    ctx.body = 200; 
+  } else {
+    await next();
+  }
+});
+
 // try-catch 中间件
 app.use(async (ctx, next) => {
   try {
@@ -43,7 +55,7 @@ app.use(async (ctx, next) => {
     return ctx.response.body
   }
 })
-
+app.use(cors())
 // app.use(async (ctx, next) => {
 //   ctx.params = ctx.request.body.fields
 //   await next()
