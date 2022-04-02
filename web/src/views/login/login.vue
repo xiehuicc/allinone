@@ -34,6 +34,7 @@
 </template>
 
 <script>
+import axios from 'axios';
 export default {
    data() {
       var validatePass = (rule, value, callback) => {
@@ -67,7 +68,18 @@ export default {
       submitForm(formName) {
         this.$refs[formName].validate((valid) => {
           if (valid) {
-            this.$router.push({path:'/sideBar'})
+            axios({
+              method: 'get',
+              url: 'people/findOne?delete=false'
+            }).then(res => {
+              console.log('222222222222',res)
+              if(res.data.code == 200) {
+                this.$router.push({path:'/sideBar'})
+              }
+            }).catch(err => {
+              console.log(err.toString())
+            }) 
+          
           } else {
             console.log('error submit!!');
             return false;
