@@ -6,7 +6,6 @@ service/node_modules/*
 **/package-lock.json*
 service/log/*
 /dist
-service/package-lock.json
 
 # local env files
 .env.local

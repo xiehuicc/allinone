@@ -66,18 +66,19 @@ export default {
     },
     methods: {
       submitForm(formName) {
+        console.log('---',this.ruleForm)
         this.$refs[formName].validate((valid) => {
           if (valid) {
-            axios({
-              method: 'get',
-              url: 'people/findOne?delete=false'
-            }).then(res => {
+            console.log('======',this.$store)
+            this.$store.dispatch('login',this.ruleForm).then(res => {
               console.log('222222222222',res)
               if(res.data.code == 200) {
                 this.$router.push({path:'/sideBar'})
+              } else {
+                this.$message.error(res.data.message || '登录失败')
               }
             }).catch(err => {
-              console.log(err.toString())
+              console.log(err)
             }) 
           
           } else {
