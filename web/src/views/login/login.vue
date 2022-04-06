@@ -12,7 +12,7 @@
             <el-input
               placeholder="请输入账号"
               prefix-icon="el-icon-user"
-              v-model="ruleForm.user"
+              v-model="ruleForm.account"
             ></el-input>
           </el-form-item>
           <el-form-item prop="pass">
@@ -20,7 +20,7 @@
             placeholder="请输入密码"
             type="password" 
             prefix-icon="el-icon-lock"
-            v-model="ruleForm.pass" 
+            v-model="ruleForm.password" 
             autocomplete="off">
             </el-input>
           </el-form-item>
@@ -34,7 +34,6 @@
 </template>
 
 <script>
-import axios from 'axios';
 export default {
    data() {
       var validatePass = (rule, value, callback) => {
@@ -50,15 +49,15 @@ export default {
       return {
         //表单数据
         ruleForm: {
-          user:'admin',
-          pass: '111111',
+          account:'admin',
+          password: '111111',
         },
         rules: {
-          user: [
+          account: [
           { required: true, message: '请输入用户名', trigger: 'blur' },
           { min: 3, max: 15, message: '长度在3到5个字符', trigger: 'blur' }
         ],
-          pass: [
+          password: [
             { validator: validatePass, trigger: 'blur' }
           ],
         }
@@ -66,13 +65,13 @@ export default {
     },
     methods: {
       submitForm(formName) {
-        console.log('---',this.ruleForm)
         this.$refs[formName].validate((valid) => {
           if (valid) {
             console.log('======',this.$store)
             this.$store.dispatch('login',this.ruleForm).then(res => {
               console.log('222222222222',res)
               if(res.data.code == 200) {
+                this.$message.success(`${res.data.message}，即将跳转..`)
                 this.$router.push({path:'/sideBar'})
               } else {
                 this.$message.error(res.data.message || '登录失败')
@@ -80,7 +79,6 @@ export default {
             }).catch(err => {
               console.log(err)
             }) 
-          
           } else {
             console.log('error submit!!');
             return false;
