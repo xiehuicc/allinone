@@ -1,5 +1,6 @@
 const mongodbCRUD = require('../../utils/mongodbCURD')
 const dbHelper = require('../../utils/dbHelp')
+const { context } = require('../../app')
 const model = 'peoples'
 
 
@@ -13,11 +14,10 @@ const PeopleController = {
         return await mongodbCRUD.findOne(model,query)
     },
 
-    async add(body) {
-        // let fields = await this.transformField(body)
-        const profile = {}
-        if(body.profile) {
-            var {account,tel} = body.profile
+    async add(body,ctx) {
+        let identities = await this.transformField(body)
+        if(identities.profile) {
+            var {account,tel} = identities.profile
         } else {
             throw new global.BusinessError(500,'请先输入人员信息')
         }
@@ -25,31 +25,34 @@ const PeopleController = {
         if(account) {
             let res = await mongodbCRUD.findOne(model,{["profile.account"]: account})
             if(res) {
-                throw new global.BusinessError(500,'该账号已存在')
+                // throw new global.BusinessError(500,'该账号已存在')
+                ctx.throw(500,'该账号已存在')
             }
         }
         if(tel) {
             let res = await mongodbCRUD.findOne(model,{["profile.tel"]: tel})
             if(res) {
-                throw new global.BusinessError(500,'该手机号已存在')
+                // throw new global.BusinessError(500,'该手机号已存在')
+                ctx.throw(500,'该手机号已存在')
             }
         }
-        return await dbHelper.add(model,body)
+        let res = await dbHelper.add(model,identities)
+        return {code: 200,result: res}
     },
 
     // 转换 对应数据库中查询的字段
     async transformField(body) {
-        if(body.profile) {
-            let identities = {
-                profile: {}
-            }
-            const {name, account,password,tel} = body.profile
-            if(name) identities.profile.name = name
-            if(account) identities.profile.account = account
-            if(password) identities.profile.password = password
-            if(tel) identities.profile.tel = tel
-            return identities
+        let identities= {
+            profile : {}
         }
+        const {employeeNumber,birthday,name, account,password,tel} = body
+        identities.birthday = birthday || ''
+        identities.profile.name = name
+        identities.profile.employeeNumber = employeeNumber || ''
+        identities.profile.account = account
+        identities.profile.password = password
+        identities.profile.tel = tel
+        return identities
     },
 }
 

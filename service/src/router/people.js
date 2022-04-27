@@ -6,7 +6,7 @@ const router = new Router({
 
 // 新增人员
 router.post('/add', async(ctx) => {
-    ctx.body = await peopleController.add(ctx.request.body)
+    ctx.body = await peopleController.add(ctx.request.body,ctx)
 })
 
 // 查询单个人员数据

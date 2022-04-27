@@ -46,7 +46,7 @@ app.use(async (ctx, next) => {
   } catch (err) {
     console.log("捕获到了异常",`路由为${ctx.request.url}-------->${err.message}`)
     // 系统内自定义异常
-    ctx.response.status = 200
+    // ctx.response.status = 200
     ctx.response.body = {
       code: err.code || 500,
       msg: err.message,

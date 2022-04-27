@@ -122,7 +122,7 @@ exports.findOne = async (model, query, projection, populate = '') => {
 
 //新增一条
 exports.add = async (model, body) => {
-    console.log(models,models[model])
+  console.log(models,models[model])
   return models[model].create(body)
 }
 

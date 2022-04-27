@@ -9,6 +9,7 @@ const peoplesSchema = new Schema({
     birthday: {type: Schema.Types.String,default: Schema.Types.Date}, // 出生日期
     profile:{
         name: {type: Schema.Types.String, required: true}, // 员工姓名，必填
+        employeeNumber: {type: Schema.Types.String}, // 员工编号
         isInter: {type: Schema.Types.Boolean,default: true}, // 是否为内部人员，默认为true
         account: {type: Schema.Types.String }, // 员工账号
         password: {type: Schema.Types.String }, // 员工密码
