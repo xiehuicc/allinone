@@ -7,7 +7,7 @@ const  AccountController = {
         let params = {
           ["profile.account"]: account,
           ["profile.password"]: password,
-          delete: false
+          deleted: false
         }
         let res = await mongodbCRUD.findOne("peoples", params)
         // 该账号不存在

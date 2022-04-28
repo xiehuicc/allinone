@@ -7,9 +7,9 @@ const model = 'peoples'
 
 const PeopleController = {
     async findOne(query) {
-        if (query.delete) {
+        if (query.deleted) {
           // 将字符串 转为布尔值
-          query.delete =  eval(query.delete)
+          query.deleted =  eval(query.deleted)
         }
         return await mongodbCRUD.findOne(model,query)
     },
@@ -37,6 +37,10 @@ const PeopleController = {
             }
         }
         let res = await dbHelper.add(model,identities)
+        return {code: 200,result: res}
+    },
+    async pageQuery(params) {
+        let res = await mongodbCRUD.pageQuery(model,params)
         return {code: 200,result: res}
     },
 

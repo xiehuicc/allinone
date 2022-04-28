@@ -5,7 +5,7 @@ const { constructObjectId } = require('../utils/ObjectId')
 
 const peoplesSchema = new Schema({
     _id: {type: Schema.Types.String, default: constructObjectId},    // 人员id
-    delete: {type: Schema.Types.Boolean, default: false}, //人员是否删除
+    deleted: {type: Schema.Types.Boolean, default: false}, //人员是否删除
     birthday: {type: Schema.Types.String,default: Schema.Types.Date}, // 出生日期
     profile:{
         name: {type: Schema.Types.String, required: true}, // 员工姓名，必填

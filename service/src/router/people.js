@@ -14,4 +14,9 @@ router.get('/findOne', async(ctx) => {
     ctx.body = await peopleController.findOne(ctx.query)
 })
 
+// 分页查询
+router.get('/pageQuery', async (ctx) => {
+    ctx.body = await peopleController.pageQuery(ctx.query)
+})
+
 module.exports = router
