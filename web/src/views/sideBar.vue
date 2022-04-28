@@ -1,7 +1,7 @@
 <template>
  <div class="main">
    <div class="left" style="{width:(!isCollapse?'200px':'auto')}"> 
-      <h3>公寓管理系统</h3>
+      <h3>系统</h3>
       <el-menu
         default-active="2"
         class="el-menu-vertical-demo"
@@ -44,10 +44,12 @@
             <el-menu-item index="3-2">选项2</el-menu-item>
           </el-menu-item-group>
         </el-submenu>
-        <el-menu-item index="4">
-          <i class="el-icon-setting"></i>
+        <el-submenu index="4">
+          <template slot="title">
+           <i class="el-icon-setting"></i>
           <span slot="title">导航四</span>
-        </el-menu-item>
+          </template>
+        </el-submenu>
       </el-menu> 
       <div class="collapse">
         <i :class="!isCollapse?'el-icon-s-fold':'el-icon-s-unfold'" @click="handleFold"></i>
@@ -101,6 +103,7 @@ h3{
   display: flex;
   .left{
      background-color:#0DADA4;
+     width: 200px;
   }
   .right{
     flex: 1;
@@ -121,6 +124,12 @@ h3{
   .top{
     height: 50px;
     background-color: pink;
+  }
+  .el-menu-vertical-demo /deep/ .el-submenu__title {
+    font-size: 18px;
+  }
+  .el-menu-vertical-demo{
+    font-size: 30px;
   }
 }
 </style>

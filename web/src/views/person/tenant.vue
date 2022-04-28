@@ -63,6 +63,10 @@
       </template>
     </el-table-column>
   </el-table>
+  <div>
+    <button @click="confire">确认</button>
+    <button @click="delay">延迟</button>
+  </div>
   </div>
 </template>
 
@@ -79,8 +83,34 @@ export default {
   methods: {
     handleClick(row){
       console.log(row);
-    }
-  },
+    },
+     confire() {
+        console.log('1111111111confirm')
+        this.debounce(2000)
+    },
+     test() {
+        console.log('method22222222')
+    },
+     debounce(fn,delay){
+        let timer = null //借助闭包
+        if(timer !==null) clearTimeout(timer)
+        timer = setTimeout(() => {
+          this.test()
+        },2000)
+        console.log('tiemr',timer)
+        // return function() {
+        // // 每次执行前先清除定时器，以确保在delay时间内fn函数不被执行。
+        // timer && clearTimeout(timer) 
+        // timer = setTimeout(fn, delay)
+        // }
+      },
+      delay() {
+        console.log('ddddddd')
+        setTimeout(() => {
+          console.log('delaydelay')
+        },2000)
+      }
+    },
 }
 </script>
 

@@ -1,7 +1,13 @@
 <template>
   <div class="employee-main">
     <div class="employee-list-top">
-      <el-button type="primary" @click="dialogVisible = true">新增</el-button>
+      <div class="search-people">
+        <el-input v-model="searchContent" placeholder="姓名/工号/手机号" style="border-radius:0px"></el-input>
+        <el-button type="primary" icon="el-icon-search" style="border-radius:0px" @click="searchPeople"></el-button>
+      </div>
+      <div class="add-people-button">
+        <el-button  type="primary" @click="dialogVisible = true">新增</el-button>
+      </div>
       <el-dialog
         title="人员新增"
         :visible.sync="dialogVisible"
@@ -34,31 +40,52 @@
     </div>
     <el-table
       :data="employeeList"
-      style="width: 100%">
-      <el-table-column
-        prop="name"
-        label="工号"
-        width="100">
+      border
+      height="650"
+      class="people-list-table"
+      style="width: 90%">
+       <el-table-column
+        type="selection"
+        width="50">
       </el-table-column>
        <el-table-column
-        prop="name"
-        label="姓名"
-        width="120">
-      </el-table-column>
-       <el-table-column
-        prop="name"
-        label="手机号"
-        width="120">
-      </el-table-column>
-       <el-table-column
-        prop="name"
-        label="姓名"
-        width="120">
-      </el-table-column>
-       <el-table-column
-        prop="name"
-        label="姓名"
+        type="index"
+        label="序号"
         width="60">
+      </el-table-column>
+      <el-table-column
+        prop="profile.employeeNumber"
+        label="工号"
+        width="120">
+      </el-table-column>
+       <el-table-column
+        prop="profile.name"
+        label="姓名"
+        width="120">
+      </el-table-column>
+       <el-table-column
+        prop="profile.tel"
+        label="手机号"
+        width="150">
+      </el-table-column>
+       <el-table-column
+        prop="birthday"
+        label="生日"
+        width="120">
+      </el-table-column>
+      <el-table-column
+        prop="createTime"
+        label="创建时间"
+        width="250">
+      </el-table-column>
+       <el-table-column
+        prop="createTime"
+        label="操作"
+        width="150">
+          <template slot-scope="scope">
+            <el-button type="text" @click="handelEdit(scope.row)">编辑</el-button>
+            <el-button  type="text">查看</el-button>
+          </template>
       </el-table-column>
     </el-table>
   </div>
@@ -69,6 +96,7 @@ import axios from 'axios';
 export default {
   data() {
     return {
+      searchContent:'',
       employeeList:[],
       peopleForm:{
         employeeNumber: '',
@@ -96,10 +124,19 @@ export default {
       dialogVisible: false
     }
   },
+  mounted() {
+    this.getEmployeeList()
+  },
   methods: {
+    searchPeople(){
+      console.log('1111111')
+    },
     getEmployeeList() {
-      axios.get('',{delete: false})
+      axios.get('/people/pageQuery',{deleted: false})
       .then(res => {
+        if(res.data.code == 200) {
+          this.employeeList = res.data.result.results
+        }
         console.log('res',res)
       })
       .catch(err => {
@@ -124,6 +161,9 @@ export default {
         console.log('err',err)
         this.dialogVisible = false
       })
+    },
+    handelEdit(row){
+      console.log('row',row)
     }
   },
 }
@@ -132,5 +172,18 @@ export default {
 <style>
 .employee-list {
   background-color: blue;
+}
+.employee-list-top {
+  margin: 10px 30px;
+  display: flex;
+}
+.search-people {
+  display: flex;
+}
+.add-people-button {
+  margin-left: 50px;
+}
+.people-list-table {
+  margin: 30px 30px;
 }
 </style>

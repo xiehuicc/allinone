@@ -1,7 +1,7 @@
 import axios from 'axios'
 import config from '../../static/config'
 axios.defaults.baseURL = config.baseUrl
-
+console.log('url',config,axios.defaults.baseURL )
 export default {
   setAxiosGetPromise: (url, params) => params ? axios.get(url, { params: params }) : axios.get(url),
   setAxiosPostPromise: (url, data) => data ? axios.post(url, data) : axios.post(url),
