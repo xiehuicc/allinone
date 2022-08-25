@@ -4,10 +4,11 @@ var models = {};
 (async function () {
   const fs = require('fs')
   const path = require('path')
-  const files = await fs.readdirSync(path.join(__dirname, '../models'))
+  console.log('======',path.join(__dirname, '../src/models'))
+  const files = await fs.readdirSync(path.join(__dirname, '../src/models'))
   files.forEach(file => {
     if (file.includes('Schema')) {
-      const model = require(path.join(__dirname, `../models/${file}`))
+      const model = require(path.join(__dirname, `../src/models/${file}`))
       const [modelName] = file.split(/Schema/) // file为peoplesSchema.js  输出如 [ 'peoples' ]
     //   modelName == 'people' ? models['account'] = model : ''
       models[modelName] = model // 输出如 Model { peoples }

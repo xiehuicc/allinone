@@ -14,6 +14,10 @@ const PeopleController = {
         return await mongodbCRUD.findOne(model,query)
     },
 
+    async find(params) {
+        return await mongodbCRUD.find(model,params)
+    },
+
     async add(body,ctx) {
         let identities = await this.transformField(body)
         if(identities.profile) {
@@ -43,7 +47,7 @@ const PeopleController = {
         let res = await mongodbCRUD.pageQuery(model,params)
         return {code: 200,result: res}
     },
-
+   
     // 转换 对应数据库中查询的字段
     async transformField(body) {
         let identities= {

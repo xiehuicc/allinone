@@ -1,6 +1,6 @@
 const MongoClient = require('mongodb').MongoClient;
 const config =  require('../config/config')
-const people = require('../models/peoplesSchema')
+const people = require('../src/models/peoplesSchema')
 const _ =  require('lodash')
 const transactionOptions = {
     readPreference: 'primary',
