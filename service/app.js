@@ -73,7 +73,7 @@ app.use(router.routes(), router.allowedMethods())
 
 // koa static server
 const server = app.listen(port,() => {
-  console.log('【 Service 】 starting on port ' + port)
+  console.log('【 Service 】 starting on port： ' + port)
 })
 
 db.connect()

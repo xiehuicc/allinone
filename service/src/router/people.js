@@ -23,4 +23,8 @@ router.get('/pageQuery', async (ctx) => {
     ctx.body = await peopleController.pageQuery(ctx.query)
 })
 
+// 同步三方人员
+router.post('/pullPeople', async (ctx) => {
+    await peopleController.pullPeople(ctx.request.body)
+})
 module.exports = router

@@ -4,7 +4,6 @@ var models = {};
 (async function () {
   const fs = require('fs')
   const path = require('path')
-  console.log('======',path.join(__dirname, '../src/models'))
   const files = await fs.readdirSync(path.join(__dirname, '../src/models'))
   files.forEach(file => {
     if (file.includes('Schema')) {
@@ -123,7 +122,6 @@ exports.findOne = async (model, query, projection, populate = '') => {
 
 //新增一条
 exports.add = async (model, body) => {
-  console.log(models,models[model])
   return models[model].create(body)
 }
 

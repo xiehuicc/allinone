@@ -1,6 +1,9 @@
 const mongodbCRUD = require('../../utils/mongodbCURD')
 const dbHelper = require('../../utils/dbHelp')
 const { context } = require('../../app')
+const ObjectId = require('mongodb').ObjectId;
+const yzjController = require('../thirdpart/controllers/yzjController')
+const defaultPassword  = '111111'
 const model = 'peoples'
 
 
@@ -19,7 +22,12 @@ const PeopleController = {
     },
 
     async add(body,ctx) {
-        let identities = await this.transformField(body)
+        let identities
+        if(body.profile) {
+            identities = body
+        } else {
+            identities = await this.transformField(body)
+        }
         if(identities.profile) {
             var {account,tel} = identities.profile
         } else {
@@ -29,19 +37,19 @@ const PeopleController = {
         if(account) {
             let res = await mongodbCRUD.findOne(model,{["profile.account"]: account})
             if(res) {
-                // throw new global.BusinessError(500,'该账号已存在')
-                ctx.throw(500,'该账号已存在')
+                throw new global.BusinessError(500,`${account}该账号已存在`)
+                // ctx.throw(500,'该账号已存在')
             }
         }
         if(tel) {
             let res = await mongodbCRUD.findOne(model,{["profile.tel"]: tel})
             if(res) {
-                // throw new global.BusinessError(500,'该手机号已存在')
-                ctx.throw(500,'该手机号已存在')
+                throw new global.BusinessError(500,`${tel}该手机号已存在`)
+                // ctx.throw(500,'该手机号已存在')
             }
         }
-        let res = await dbHelper.add(model,identities)
-        return {code: 200,result: res}
+        await dbHelper.add(model,identities)
+        return {code: 200,result: true}
     },
     async pageQuery(params) {
         let res = await mongodbCRUD.pageQuery(model,params)
@@ -62,6 +70,49 @@ const PeopleController = {
         identities.profile.tel = tel
         return identities
     },
+    // 同步人员
+    async pullPeople(body) {
+        let result = await yzjController.getAllPeople()
+        let pullPeopleList = result.data
+        for (let i = 0; i < pullPeopleList.length; i++) {
+            try {
+                let people = this.changeFiled(pullPeopleList[i])
+                let findRes = await this.findOne({_id: ObjectId(people._id)})
+                if(findRes) {
+                    
+                } else {
+                    await this.add(people)
+                }
+            } catch (error) {
+                console.log(error)
+            }
+        }
+        return {success: true}
+    },
+    //三方中的人员与数据库中人员字段转换 
+    changeFiled(user) {
+        let people = {
+            _id: user.openId,
+            birthday: user.birthday,
+            profile: {
+                name: user.name,
+                employeeNumber: user.uid,
+                account: user.phone,
+                password: defaultPassword,
+                tel: user.phone,
+                photoUrl: user.photoUrl,
+                email: user.email,
+                job: user.jobTitle,
+                gender: user.gender
+            },
+            organization: {
+                parentOrganizationId: '',
+                organizationId:  user.orgId,
+                organizationName: user.department
+            }
+        }
+        return people
+    }
 }
 
 module.exports = PeopleController
